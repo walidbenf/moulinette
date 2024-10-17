@@ -47,6 +47,16 @@ def main():
             "sources": ['tester_functions/main_print_reverse_alphabet.c', 'tester_functions/ft_putchar.c', 'tester_functions/ft_print_reverse_alphabet.c'],
             "executable": 'test_reverse_print_alphabet',
             "output": None
+        },
+        {
+            "sources": ['w_functions/main_w_print_numbers.c', 'w_functions/w_putchar.c', 'w_functions/w_print_numbers.c'],
+            "executable": 'test_w_print_numbers',
+            "output": None
+        },
+        {
+            "sources": ['tester_functions/main_print_numbers.c', 'tester_functions/ft_putchar.c', 'tester_functions/ft_print_numbers.c'],
+            "executable": 'test_print_numbers',
+            "output": None
         }
     ]
     
@@ -76,6 +86,13 @@ def main():
         display_differences(differences)
     else:
         print("No differences found in reverse_print_alphabet tests.")
+    
+    differences = compare_outputs(tests[6]["output"], tests[7]["output"])
+    if differences:
+        print("Differences found in print_numbers tests:")
+        display_differences(differences)
+    else:
+        print("No differences found in print_numbers tests.")
 
 if __name__ == "__main__":
     main()
