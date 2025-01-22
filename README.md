@@ -1,5 +1,9 @@
 ## Moulinette pour mes 2 bg préférés
 
+#### Pour lancer le programme
+```sh
+python3 moulinette.py
+```
 #### Pour se log:
 ```sh
 login:exam
