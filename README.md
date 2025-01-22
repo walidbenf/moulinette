@@ -1,3 +1,19 @@
-Moulinette pour des projets de 42(en cours)
-dans tester_functions mettre les fonctions à tester
-rm test_* pour supprimer les test
+## Moulinette pour mes 2 bg préférés
+
+#### Pour se log:
+```sh
+login:exam
+password:exam
+```
+#### Pour lancer l'exam
+```sh
+examshell
+```
+#### Pour se faire corriger
+```sh
+grademe
+```
+#### Si vous avez besoin d'aides
+```sh
+help
+```
