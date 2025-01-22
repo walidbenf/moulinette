@@ -21,3 +21,4 @@ grademe
 ```sh
 help
 ```
+![image](https://github.com/user-attachments/assets/98689309-399e-4f64-9dbf-9e0113419a30)
