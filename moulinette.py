@@ -18,12 +18,14 @@ LEVEL_0_EXERCISES = [
     "aff_a",
     "aff_first_param",
     "aff_last_param",
+    "aff_z",
     "ft_countdown",
     "ft_print_numbers",
     "hello",
     "maff_alpha",
     "maff_revalpha",
-    "only_a"
+    "only_a",
+    "only_z",
 ]
 
 def check_credentials():
