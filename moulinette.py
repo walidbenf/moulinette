@@ -18,7 +18,7 @@ LEVEL_0_EXERCISES = [
     "aff_a",
     "aff_first_param",
     "aff_last_param",
-    "aff_z",
+    "aff_z", 
     "ft_countdown",
     "ft_print_numbers",
     "hello",
@@ -26,6 +26,21 @@ LEVEL_0_EXERCISES = [
     "maff_revalpha",
     "only_a",
     "only_z",
+]
+
+LEVEL_1_EXERCISES = [
+    "first_word",
+    "fizzbuzz",
+    "ft_putstr",
+    "ft_strcpy",
+    "ft_strlen",
+    "ft_swap",
+    "repeat_alpha",
+    "rev_print",
+    "rot_13",
+    "rotone",
+    "search_and_replace",
+    "ulstr"
 ]
 
 def check_credentials():
@@ -42,6 +57,8 @@ def get_random_exercise():
     global current_level
     if current_level == 0:
         return random.choice(LEVEL_0_EXERCISES)
+    elif current_level == 1:
+        return random.choice(LEVEL_1_EXERCISES)
     return None
 
 def check_submission():
@@ -61,13 +78,27 @@ def check_submission():
     
     return True
 
+def is_program(source_file):
+    with open(source_file, 'r') as f:
+        content = f.read()
+        return 'main' in content
+
 def compile_and_run(source_file, output_file):
     try:
-        # Redirect stderr to /dev/null to hide compilation errors
-        subprocess.run(['gcc', source_file, '-o', output_file], 
-                      check=True, 
-                      stderr=subprocess.DEVNULL,
-                      stdout=subprocess.DEVNULL)
+        if is_program(source_file):
+            # Compile single file if it's a program
+            subprocess.run(['gcc', source_file, '-o', output_file], 
+                         check=True, 
+                         stderr=subprocess.DEVNULL,
+                         stdout=subprocess.DEVNULL)
+        else:
+            # Compile with test main if it's a function
+            test_main = f"exam/level{current_level}/{current_exercise}/main.c"
+            subprocess.run(['gcc', source_file, test_main, '-o', output_file], 
+                         check=True, 
+                         stderr=subprocess.DEVNULL,
+                         stdout=subprocess.DEVNULL)
+        
         result = subprocess.run([f'./{output_file}'], 
                               capture_output=True, 
                               text=True)
@@ -79,8 +110,11 @@ def grade_exercise():
     if not check_submission():
         return
     
-    submission_output = compile_and_run(f"rendu/{current_exercise}/{current_exercise}.c", "submission_exe")
-    reference_output = compile_and_run(f"exam/level{current_level}/{current_exercise}/{current_exercise}.c", "reference_exe")
+    submission_path = f"rendu/{current_exercise}/{current_exercise}.c"
+    reference_path = f"exam/level{current_level}/{current_exercise}/{current_exercise}.c"
+    
+    submission_output = compile_and_run(submission_path, "submission_exe")
+    reference_output = compile_and_run(reference_path, "reference_exe")
     
     if submission_output is None:
         print(f"{RED}Failure{RESET}")
@@ -99,6 +133,7 @@ def launch_examshell():
     current_level = 0
     current_exercise = get_random_exercise()
     display_score()
+    print(f"Submit your code in: rendu/{current_exercise}/{current_exercise}.c")
     print(f"Level {current_level} - Exercise: {current_exercise}")
 
 def display_help():
@@ -113,10 +148,31 @@ def display_score():
     print(f"Current Level: {current_level}")
 
 def update_score():
-    global current_score
+    global current_score, current_level, current_exercise
+    previous_level = current_level
+    
     if current_score < 100:
         current_score += 25
-    display_score()
+        
+        # Check for level progression
+        if current_score >= 75 and current_level == 2:
+            current_level = 3
+            print(f"\n{GREEN}Congratulations! You've reached level 3!{RESET}")
+            current_exercise = get_random_exercise()
+        elif current_score >= 50 and current_level == 1:
+            current_level = 2
+            print(f"\n{GREEN}Congratulations! You've reached level 2!{RESET}")
+            current_exercise = get_random_exercise()
+        elif current_score >= 25 and current_level == 0:
+            current_level = 1
+            print(f"\n{GREEN}Congratulations! You've reached level 1!{RESET}")
+            current_exercise = get_random_exercise()
+        
+        if current_level != previous_level:
+            print(f"New exercise: {current_exercise}")
+            print(f"Submit your code in: rendu/{current_exercise}/{current_exercise}.c")
+        
+        display_score()
 
 def interactive_shell():
     while True:

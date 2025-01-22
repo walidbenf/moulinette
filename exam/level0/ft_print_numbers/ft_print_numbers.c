@@ -1,6 +1,9 @@
-#include <unistd.h>
+#include <stdio.h>
 
-void	ft_print_numbers(void)
+void ft_print_numbers(void);
+
+int main(void)
 {
-	write(1, "0123456789\n", 10);
+    ft_print_numbers();
+    return 0;
 }
