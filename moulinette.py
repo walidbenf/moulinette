@@ -126,6 +126,14 @@ def grade_exercise():
     else:
         print(f"{RED}Failure{RESET}")
 
+def display_subject(exercise):
+    subject_path = f"exam/level{current_level}/{exercise}/subject.txt"
+    if os.path.exists(subject_path):
+        with open(subject_path, 'r') as f:
+            print("\nSubject:")
+            print(f.read())
+            print()
+
 def launch_examshell():
     print("Launching exam environment...")
     global current_score, current_level, current_exercise
@@ -135,6 +143,7 @@ def launch_examshell():
     display_score()
     print(f"Submit your code in: rendu/{current_exercise}/{current_exercise}.c")
     print(f"Level {current_level} - Exercise: {current_exercise}")
+    display_subject(current_exercise)
 
 def display_help():
     print("\nAvailable commands:")
