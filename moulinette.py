@@ -1,98 +1,144 @@
+import sys
+import getpass
+import random
 import subprocess
-import difflib
+import os
 
-def compile_file(sources, executable):
-    subprocess.run(['gcc'] + sources + ['-o', executable], check=True)
+# ANSI color codes
+GREEN = '\033[92m'
+RED = '\033[91m'
+RESET = '\033[0m'
 
-def execute_file(executable):
-    result = subprocess.run(['./' + executable], capture_output=True, text=True)
-    return result.stdout.splitlines()
+# Global variables
+current_score = 0
+current_level = 0
+current_exercise = None
 
-def compare_outputs(output1, output2):
-    diff = difflib.unified_diff(output1, output2, lineterm='')
-    return list(diff)
+LEVEL_0_EXERCISES = [
+    "aff_a",
+    "aff_first_param",
+    "aff_last_param",
+    "ft_countdown",
+    "ft_print_numbers",
+    "hello",
+    "maff_alpha",
+    "maff_revalpha",
+    "only_a"
+]
 
-def display_differences(differences):
-    for line in differences:
-        print(line)
+def check_credentials():
+    login = input("Login: ")
+    password = getpass.getpass("Password: ")
+    
+    if login == "exam" and password == "exam":
+        return True
+    else:
+        print("Invalid credentials")
+        return False
+
+def get_random_exercise():
+    global current_level
+    if current_level == 0:
+        return random.choice(LEVEL_0_EXERCISES)
+    return None
+
+def check_submission():
+    if current_exercise is None:
+        print("No exercise currently assigned. Launch examshell first.")
+        return False
+    
+    submission_path = f"rendu/{current_exercise}/{current_exercise}.c"
+    if not os.path.exists(submission_path):
+        print(f"No submission found at {submission_path}")
+        return False
+    
+    reference_path = f"exam/level{current_level}/{current_exercise}/{current_exercise}.c"
+    if not os.path.exists(reference_path):
+        print(f"Reference solution not found at {reference_path}")
+        return False
+    
+    return True
+
+def compile_and_run(source_file, output_file):
+    try:
+        # Redirect stderr to /dev/null to hide compilation errors
+        subprocess.run(['gcc', source_file, '-o', output_file], 
+                      check=True, 
+                      stderr=subprocess.DEVNULL,
+                      stdout=subprocess.DEVNULL)
+        result = subprocess.run([f'./{output_file}'], 
+                              capture_output=True, 
+                              text=True)
+        return result.stdout
+    except subprocess.CalledProcessError:
+        return None
+
+def grade_exercise():
+    if not check_submission():
+        return
+    
+    submission_output = compile_and_run(f"rendu/{current_exercise}/{current_exercise}.c", "submission_exe")
+    reference_output = compile_and_run(f"exam/level{current_level}/{current_exercise}/{current_exercise}.c", "reference_exe")
+    
+    if submission_output is None:
+        print(f"{RED}Failure{RESET}")
+        return
+    
+    if submission_output == reference_output:
+        print(f"{GREEN}Success!{RESET}")
+        update_score()
+    else:
+        print(f"{RED}Failure{RESET}")
+
+def launch_examshell():
+    print("Launching exam environment...")
+    global current_score, current_level, current_exercise
+    current_score = 0
+    current_level = 0
+    current_exercise = get_random_exercise()
+    display_score()
+    print(f"Level {current_level} - Exercise: {current_exercise}")
+
+def display_help():
+    print("\nAvailable commands:")
+    print("help     - Display this help message")
+    print("examshell- Launch exam environment")
+    print("grademe  - Grade current exercise")
+    print("exit     - Quit the program\n")
+
+def display_score():
+    print(f"\nCurrent Score: {current_score}/100")
+    print(f"Current Level: {current_level}")
+
+def update_score():
+    global current_score
+    if current_score < 100:
+        current_score += 25
+    display_score()
+
+def interactive_shell():
+    while True:
+        command = input("> ").lower().strip()
+        
+        if command == "help":
+            display_help()
+        elif command == "examshell":
+            launch_examshell()
+        elif command == "grademe":
+            grade_exercise()
+        elif command == "exit":
+            print("Goodbye!")
+            sys.exit(0)
+        else:
+            print("Unknown command. Type 'help' for available commands.")
 
 def main():
-    tests = [
-        {
-            "sources": ['w_functions/main_w_putchar.c', 'w_functions/w_putchar.c'],
-            "executable": 'test_w_putchar',
-            "output": None
-        },
-        {
-            "sources": ['tester_functions/main_putchar.c', 'tester_functions/ft_putchar.c'],
-            "executable": 'test_putchar',
-            "output": None
-        },
-        {
-            "sources": ['w_functions/main_w_print_alphabet.c', 'w_functions/w_putchar.c', 'w_functions/w_print_alphabet.c'],
-            "executable": 'test_w_print_alphabet',
-            "output": None
-        },
-        {
-            "sources": ['tester_functions/main_print_alphabet.c', 'tester_functions/ft_putchar.c', 'tester_functions/ft_print_alphabet.c'],
-            "executable": 'test_print_alphabet',
-            "output": None
-        },
-        {
-            "sources": ['w_functions/main_w_print_reverse_alphabet.c', 'w_functions/w_putchar.c', 'w_functions/w_print_reverse_alphabet.c'],
-            "executable": 'test_w_reverse_print_alphabet',
-            "output": None
-        },
-        {
-            "sources": ['tester_functions/main_print_reverse_alphabet.c', 'tester_functions/ft_putchar.c', 'tester_functions/ft_print_reverse_alphabet.c'],
-            "executable": 'test_reverse_print_alphabet',
-            "output": None
-        },
-        {
-            "sources": ['w_functions/main_w_print_numbers.c', 'w_functions/w_putchar.c', 'w_functions/w_print_numbers.c'],
-            "executable": 'test_w_print_numbers',
-            "output": None
-        },
-        {
-            "sources": ['tester_functions/main_print_numbers.c', 'tester_functions/ft_putchar.c', 'tester_functions/ft_print_numbers.c'],
-            "executable": 'test_print_numbers',
-            "output": None
-        }
-    ]
+    if not check_credentials():
+        sys.exit(1)
     
-    # Compile and execute the tests
-    for test in tests:
-        compile_file(test["sources"], test["executable"])
-        test["output"] = execute_file(test["executable"])
-    
-    # Compare the outputs
-    differences = compare_outputs(tests[0]["output"], tests[1]["output"])
-    if differences:
-        print("Differences found in putchar tests:")
-        display_differences(differences)
-    else:
-        print("No differences found in putchar tests.")
-    
-    differences = compare_outputs(tests[2]["output"], tests[3]["output"])
-    if differences:
-        print("Differences found in print_alphabet tests:")
-        display_differences(differences)
-    else:
-        print("No differences found in print_alphabet tests.")
-    
-    differences = compare_outputs(tests[4]["output"], tests[5]["output"])
-    if differences:
-        print("Differences found in reverse_print_alphabet tests:")
-        display_differences(differences)
-    else:
-        print("No differences found in reverse_print_alphabet tests.")
-    
-    differences = compare_outputs(tests[6]["output"], tests[7]["output"])
-    if differences:
-        print("Differences found in print_numbers tests:")
-        display_differences(differences)
-    else:
-        print("No differences found in print_numbers tests.")
+    print("\nAuthentication successful!")
+    display_help()
+    interactive_shell()
 
 if __name__ == "__main__":
     main()
