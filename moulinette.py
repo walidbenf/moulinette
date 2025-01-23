@@ -13,7 +13,52 @@ RESET = '\033[0m'
 current_score = 0
 current_level = 0
 current_exercise = None
-
+EXERCISE_TESTS = {
+    "aff_a": [
+        {"args": ["abc"], "expected": "a\n"},
+        {"args": ["dubO a POIL"], "expected": "a\n"},
+        {"args": ["zz sent le poney"], "expected": "\n"},
+        {"args": [], "expected": "a\n"}
+    ],
+    "aff_first_param": [
+        {"args": ["vincent", "mit", "l'ane", "dans", "un", "pre", "et", "s'en", "vint"], "expected": "vincent\n"},
+        {"args": ["j'aime le fromage de chevre"], "expected": "j'aime le fromage de chevre\n"},
+        {"args": [], "expected": "\n"}
+    ],
+    "aff_last_param": [
+        {"args": ["zaz", "mange", "des", "chats"], "expected": "chats\n"},
+        {"args": ["j'aime le savon"], "expected": "j'aime le savon\n"},
+        {"args": [], "expected": "\n"}
+    ],
+    "aff_z": [
+        {"args": ["abc"], "expected": "z\n"},
+        {"args": ["dubO a POIL"], "expected": "z\n"},
+        {"args": ["zaz sent le poney"], "expected": "z\n"},
+        {"args": [], "expected": "z\n"},
+        {"args": ["abc", "def"], "expected": "z\n"}
+    ],
+    "ft_countdown": [
+        {"args": [], "expected": "9876543210\n"}
+    ],
+    "ft_print_numbers": [
+        {"args": [], "expected": "0123456789\n"}
+    ],
+    "hello": [
+        {"args": [], "expected": "Hello World!\n"}
+    ],
+    "maff_alpha": [
+        {"args": [], "expected": "aBcDeFgHiJkLmNoPqRsTuVwXyZ\n"}
+    ],
+    "maff_revalpha": [
+        {"args": [], "expected": "zYxWvUtSrQpOnMlKjIhGfEdCbA\n"}
+    ],
+    "only_a": [
+        {"args": [], "expected": "a\n"}
+    ],
+    "only_z": [
+        {"args": [], "expected": "z\n"}
+    ]
+}
 LEVEL_0_EXERCISES = [
     "aff_a",
     "aff_first_param",
@@ -47,9 +92,16 @@ LEVEL_2_EXERCISES = [
 "do_op",
 "ft_atoi",
 "ft_strcmp",
+"ft_strdup",
 "ft_strrev",
+"inter",
+"last_word",
+"union"
 ]
 
+LEVEL_3_EXERCISES = [
+    "ft_atoi_base"
+]
 def check_credentials():
     login = input("Login: ")
     password = getpass.getpass("Password: ")
@@ -66,6 +118,10 @@ def get_random_exercise():
         return random.choice(LEVEL_0_EXERCISES)
     elif current_level == 1:
         return random.choice(LEVEL_1_EXERCISES)
+    elif current_level == 2:
+        return random.choice(LEVEL_2_EXERCISES)
+    elif current_level == 3:
+        return random.choice(LEVEL_3_EXERCISES)
     return None
 
 def check_submission():
@@ -90,23 +146,25 @@ def is_program(source_file):
         content = f.read()
         return 'main' in content
 
-def compile_and_run(source_file, output_file):
+def compile_and_run(source_file, output_file, args=None):
     try:
         if is_program(source_file):
-            # Compile single file if it's a program
             subprocess.run(['gcc', source_file, '-o', output_file], 
                          check=True, 
                          stderr=subprocess.DEVNULL,
                          stdout=subprocess.DEVNULL)
         else:
-            # Compile with test main if it's a function
             test_main = f"exam/level{current_level}/{current_exercise}/main.c"
             subprocess.run(['gcc', source_file, test_main, '-o', output_file], 
                          check=True, 
                          stderr=subprocess.DEVNULL,
                          stdout=subprocess.DEVNULL)
         
-        result = subprocess.run([f'./{output_file}'], 
+        cmd = [f'./{output_file}']
+        if args:
+            cmd.extend(args)
+            
+        result = subprocess.run(cmd, 
                               capture_output=True, 
                               text=True)
         return result.stdout
@@ -120,18 +178,23 @@ def grade_exercise():
     submission_path = f"rendu/{current_exercise}/{current_exercise}.c"
     reference_path = f"exam/level{current_level}/{current_exercise}/{current_exercise}.c"
     
-    submission_output = compile_and_run(submission_path, "submission_exe")
-    reference_output = compile_and_run(reference_path, "reference_exe")
+    # Get test cases for current exercise
+    test_cases = EXERCISE_TESTS.get(current_exercise, [{"args": [], "expected": ""}])
     
-    if submission_output is None:
-        print(f"{RED}Failure{RESET}")
-        return
+    for test in test_cases:
+        submission_output = compile_and_run(submission_path, "submission_exe", test["args"])
+        reference_output = compile_and_run(reference_path, "reference_exe", test["args"])
+        
+        if submission_output is None:
+            print(f"{RED}Failure{RESET}")
+            return
+        
+        if submission_output != reference_output:
+            print(f"{RED}Failure{RESET}")
+            return
     
-    if submission_output == reference_output:
-        print(f"{GREEN}Success!{RESET}")
-        update_score()
-    else:
-        print(f"{RED}Failure{RESET}")
+    print(f"{GREEN}Success!{RESET}")
+    update_score()
 
 def display_subject(exercise):
     subject_path = f"exam/level{current_level}/{exercise}/subject.txt"
