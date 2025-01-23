@@ -146,6 +146,9 @@ EXERCISE_TESTS = {
         {"args": ["Apples!", "Apples!!"], "expected": "-33, -33\n"},
         {"args": ["Apples!", "Appled!"], "expected": "1, 1\n"}
     ],
+    "ft_strdup": [
+        {"args": ["Hello, World!"], "expected": "Hello, World!\n"}
+    ],
     
 }
 LEVEL_0_EXERCISES = [
