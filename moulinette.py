@@ -80,8 +80,15 @@ EXERCISE_TESTS = {
     "ft_strlen": [
         {"args": [], "expected": "12\n"}
     ],
-	 "ft_swap": [
+	"ft_swap": [
         {"args": [], "expected": "a: 10\nb: 5\n"}
+    ],
+    "repeat_alpha": [
+        {"args": ["abc"], "expected": "abbccc\n"},
+        {"args": ["Alex."], "expected": "Alllllllllllleeeeexxxxxxxxxxxxxxxxxxxxxxxx.\n"},
+        {"args": ["abacadaba 42!"], "expected": "abbacccaddddabba 42!\n"},
+        {"args": [], "expected": "\n"},
+        {"args": [""], "expected": "\n"}
     ],
 
     #Level 2
