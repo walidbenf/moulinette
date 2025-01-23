@@ -102,7 +102,7 @@ EXERCISE_TESTS = {
         {"args": [], "expected": "\n"},
         {"args": [""], "expected": "\n"}
     ],
-        "rotone": [
+     "rotone": [
         {"args": ["abc"], "expected": "bcd\n"},
         {"args": ["Les stagiaires du staff ne sentent pas toujours tres bon."], 
          "expected": "Mft tubhjbjsft ev tubgg of tfoufou qbt upvkpvst usft cpo.\n"},
@@ -110,7 +110,15 @@ EXERCISE_TESTS = {
         {"args": [], "expected": "\n"},
         {"args": [""], "expected": "\n"}
     ],
-
+    "search_and_replace": [
+        {"args": ["Papache est un sabre", "a", "o"], "expected": "Popoche est un sobre\n"},
+        {"args": ["zaz", "art", "zul"], "expected": "\n"},
+        {"args": ["zaz", "r", "u"], "expected": "zaz\n"},
+        {"args": ["jacob", "a", "b", "c", "e"], "expected": "\n"},
+        {"args": ["ZoZ eT Dovid oiME le METol.", "o", "a"], "expected": "ZaZ eT David aiME le METal.\n"},
+        {"args": ["wNcOre Un ExEmPle Pas Facilw a Ecrirw ", "w", "e"], "expected": "eNcOre Un ExEmPle Pas Facile a Ecrire \n"}
+    ],
+    
     #Level 2
     "alpha_mirror": [
         {"args": ["abc"], "expected": "zyx\n"},
