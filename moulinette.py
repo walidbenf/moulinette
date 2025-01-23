@@ -60,7 +60,7 @@ EXERCISE_TESTS = {
         {"args": [], "expected": "z\n"}
     ],
     
-     #Level 1
+    #Level 1
     "first_word": [
         {"args": ["FOR PONY"], "expected": "FOR\n"},
         {"args": ["this        ...       is sparta, then again, maybe    not"], "expected": "this\n"},
@@ -174,6 +174,9 @@ EXERCISE_TESTS = {
     ],
     
 	#Level 3
+    "ft_atoi_base": [
+        {"args": ["15690b80B", "13"], "expected": "931221899\n"}
+    ]
 }
 LEVEL_0_EXERCISES = [
     "aff_a",
