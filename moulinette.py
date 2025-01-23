@@ -149,6 +149,9 @@ EXERCISE_TESTS = {
     "ft_strdup": [
         {"args": ["Hello, World!"], "expected": "Hello, World!\n"}
     ],
+    "ft_strrev": [
+        {"args": ["12345"], "expected": "12345\n54321\n"}
+    ],
     
 }
 LEVEL_0_EXERCISES = [
