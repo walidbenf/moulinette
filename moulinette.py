@@ -152,6 +152,19 @@ EXERCISE_TESTS = {
     "ft_strrev": [
         {"args": ["12345"], "expected": "12345\n54321\n"}
     ],
+    "inter": [
+        {"args": ["padinton", "paqefwtdjetyiytjneytjoeyjnejeyj"], "expected": "padinto\n"},
+        {"args": ["ddf6vewg64f", "gtwthgdwthdwfteewhrtag6h4ffdhsd"], "expected": "df6ewg4\n"},
+        {"args": ["rien", "cette phrase ne cache rien"], "expected": "rien\n"},
+        {"args": [], "expected": "\n"}
+    ],
+    "last_word": [
+        {"args": ["FOR PONY"], "expected": "PONY\n"},
+        {"args": ["this        ...       is sparta, then again, maybe    not"], "expected": "not\n"},
+        {"args": ["   "], "expected": "\n"},
+        {"args": ["a", "b"], "expected": "\n"},
+        {"args": ["  lorem,ipsum  "], "expected": "lorem,ipsum\n"}
+    ],
     
 }
 LEVEL_0_EXERCISES = [
