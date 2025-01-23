@@ -46,7 +46,7 @@ LEVEL_2_EXERCISES = [
 "alpha_mirror",
 "do_op",
 "ft_atoi",
-"ft_strcmp,
+"ft_strcmp",
 "ft_strrev",
 ]
 
