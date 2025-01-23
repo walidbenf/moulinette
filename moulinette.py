@@ -14,6 +14,7 @@ current_score = 0
 current_level = 0
 current_exercise = None
 EXERCISE_TESTS = {
+    #Level 0
     "aff_a": [
         {"args": ["abc"], "expected": "a\n"},
         {"args": ["dubO a POIL"], "expected": "a\n"},
@@ -57,6 +58,34 @@ EXERCISE_TESTS = {
     ],
     "only_z": [
         {"args": [], "expected": "z\n"}
+    ],
+    
+     #Level 1
+    "first_word": [
+        {"args": ["FOR PONY"], "expected": "FOR\n"},
+        {"args": ["this        ...       is sparta, then again, maybe    not"], "expected": "this\n"},
+        {"args": ["   "], "expected": "\n"},
+        {"args": ["a", "b"], "expected": "\n"},
+        {"args": ["  lorem,ipsum  "], "expected": "lorem,ipsum\n"}
+    ],
+    "fizzbuzz": [
+        {"args": [], "expected": "1\n2\nfizz\n4\nbuzz\nfizz\n7\n8\nfizz\nbuzz\n11\nfizz\n13\n14\nfizzbuzz\n16\n17\nfizz\n19\nbuzz\nfizz\n22\n23\nfizz\nbuzz\n26\nfizz\n28\n29\nfizzbuzz\n31\n32\nfizz\n34\nbuzz\nfizz\n37\n38\nfizz\nbuzz\n41\nfizz\n43\n44\nfizzbuzz\n46\n47\nfizz\n49\nbuzz\nfizz\n52\n53\nfizz\nbuzz\n56\nfizz\n58\n59\nfizzbuzz\n61\n62\nfizz\n64\nbuzz\nfizz\n67\n68\nfizz\nbuzz\n71\nfizz\n73\n74\nfizzbuzz\n76\n77\nfizz\n79\nbuzz\nfizz\n82\n83\nfizz\nbuzz\n86\nfizz\n88\n89\nfizzbuzz\n91\n92\nfizz\n94\nbuzz\nfizz\n97\n98\nfizz\nbuzz\n"}
+    ],
+
+    #Level 2
+    "alpha_mirror": [
+        {"args": ["abc"], "expected": "zyx\n"},
+        {"args": ["My horse is Amazing."], "expected": "Nb slihv rh Znzarmt.\n"},
+        {"args": [], "expected": "\n"},
+        {"args": ["abcABCxyzXYZ"], "expected": "zyxZYXabcABC\n"}
+    ],
+    "do_op": [
+        {"args": ["123", "*", "456"], "expected": "56088\n"},
+        {"args": ["9828", "/", "234"], "expected": "42\n"},
+        {"args": ["1", "+", "-43"], "expected": "-42\n"},
+        {"args": [], "expected": "\n"},
+        {"args": ["42", "%", "4"], "expected": "2\n"},
+        {"args": ["10", "-", "5"], "expected": "5\n"}
     ]
 }
 LEVEL_0_EXERCISES = [
