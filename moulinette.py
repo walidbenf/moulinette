@@ -42,6 +42,11 @@ LEVEL_1_EXERCISES = [
     "search_and_replace",
     "ulstr"
 ]
+LEVEL_2_EXERCISES = [
+"alpha_mirror",
+"do_op",
+"ft_atoi",	
+]
 
 def check_credentials():
     login = input("Login: ")
