@@ -90,6 +90,11 @@ EXERCISE_TESTS = {
         {"args": [], "expected": "\n"},
         {"args": [""], "expected": "\n"}
     ],
+    "rev_print": [
+        {"args": ["zaz"], "expected": "zaz\n"},
+        {"args": ["dub0 a POIL"], "expected": "LIOP a 0bud\n"},
+        {"args": [], "expected": "\n"}
+    ],
 
     #Level 2
     "alpha_mirror": [
