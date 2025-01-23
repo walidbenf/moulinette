@@ -102,6 +102,15 @@ EXERCISE_TESTS = {
         {"args": [], "expected": "\n"},
         {"args": [""], "expected": "\n"}
     ],
+        "rotone": [
+        {"args": ["abc"], "expected": "bcd\n"},
+        {"args": ["Les stagiaires du staff ne sentent pas toujours tres bon."], 
+         "expected": "Mft tubhjbjsft ev tubgg of tfoufou qbt upvkpvst usft cpo.\n"},
+        {"args": ["AkjhZ zLKIJz , 23y "], "expected": "BlkiA aMLJKa , 23z \n"},
+        {"args": [], "expected": "\n"},
+        {"args": [""], "expected": "\n"}
+    ],
+
     #Level 2
     "alpha_mirror": [
         {"args": ["abc"], "expected": "zyx\n"},
