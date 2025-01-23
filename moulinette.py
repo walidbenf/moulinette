@@ -45,7 +45,9 @@ LEVEL_1_EXERCISES = [
 LEVEL_2_EXERCISES = [
 "alpha_mirror",
 "do_op",
-"ft_atoi",	
+"ft_atoi",
+"ft_strcmp,
+"ft_strrev",
 ]
 
 def check_credentials():
