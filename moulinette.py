@@ -77,6 +77,13 @@ EXERCISE_TESTS = {
     "ft_strcpy": [
         {"args": [], "expected": "World\n"}
     ],
+    "ft_strlen": [
+        {"args": [], "expected": "12\n"}
+    ],
+	 "ft_swap": [
+        {"args": [], "expected": "a: 10\nb: 5\n"}
+    ],
+
     #Level 2
     "alpha_mirror": [
         {"args": ["abc"], "expected": "zyx\n"},
