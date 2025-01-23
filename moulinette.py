@@ -165,7 +165,15 @@ EXERCISE_TESTS = {
         {"args": ["a", "b"], "expected": "\n"},
         {"args": ["  lorem,ipsum  "], "expected": "lorem,ipsum\n"}
     ],
+    "union": [
+        {"args": ["zpadinton", "paqefwtdjetyiytjneytjoeyjnejeyj"], "expected": "zpadintoqefwjy\n"},
+        {"args": ["ddf6vewg64f", "gtwthgdwthdwfteewhrtag6h4ffdhsd"], "expected": "df6vewg4thras\n"},
+        {"args": ["rien", "cette phrase ne cache rien"], "expected": "rienct phas\n"},
+        {"args": [], "expected": "\n"},
+        {"args": ["rien"], "expected": "\n"}
+    ],
     
+	#Level 3
 }
 LEVEL_0_EXERCISES = [
     "aff_a",
