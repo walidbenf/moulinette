@@ -133,7 +133,20 @@ EXERCISE_TESTS = {
         {"args": [], "expected": "\n"},
         {"args": ["42", "%", "4"], "expected": "2\n"},
         {"args": ["10", "-", "5"], "expected": "5\n"}
-    ]
+    ],
+	"ft_atoi": [
+        {"args": ["-12g"], "expected": "-12\n"},
+        {"args": ["    +42paris"], "expected": "42\n"},
+        {"args": ["     -42"], "expected": "-42\n"},
+        {"args": [""], "expected": "0\n"},
+        {"args": ["  -+-42"], "expected": "0\n"}
+    ],
+    "ft_strcmp": [
+        {"args": ["Apples!", "Apples!"], "expected": "0, 0\n"},
+        {"args": ["Apples!", "Apples!!"], "expected": "-33, -33\n"},
+        {"args": ["Apples!", "Appled!"], "expected": "1, 1\n"}
+    ],
+    
 }
 LEVEL_0_EXERCISES = [
     "aff_a",
