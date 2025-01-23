@@ -4,3 +4,4 @@ Allowed functions: write
 --------------------------------------------------------------------------------
 
 Écrire un programme qui affiche un caractère 'z' sur la sortie standard.
+Suivi d'un retour à la ligne.

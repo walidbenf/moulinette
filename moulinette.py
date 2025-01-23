@@ -95,7 +95,13 @@ EXERCISE_TESTS = {
         {"args": ["dub0 a POIL"], "expected": "LIOP a 0bud\n"},
         {"args": [], "expected": "\n"}
     ],
-
+    "rot_13": [
+        {"args": ["abc"], "expected": "nop\n"},
+        {"args": ["My horse is Amazing."], "expected": "Zl ubefr vf Nznmvat.\n"},
+        {"args": ["AkjhZ zLKIJz , 23y "], "expected": "NxwuM mYXVWm , 23l \n"},
+        {"args": [], "expected": "\n"},
+        {"args": [""], "expected": "\n"}
+    ],
     #Level 2
     "alpha_mirror": [
         {"args": ["abc"], "expected": "zyx\n"},
