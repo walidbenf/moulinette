@@ -365,7 +365,11 @@ def update_score():
             current_level = 1
             print(f"\n{GREEN}Congratulations! You've reached level 1!{RESET}")
             current_exercise = get_random_exercise()
-        
+        elif current_score == 100:
+            print("\nFélicitations ! Vous avez terminé l'examen!")
+            print("Score final: 100/100")
+            print("Niveau final: 3")
+            sys.exit(0)
         if current_level != previous_level:
             print(f"New exercise: {current_exercise}")
             print(f"Submit your code in: rendu/{current_exercise}/{current_exercise}.c")
